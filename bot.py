@@ -1,4 +1,4 @@
-import requests
+import cloudscraper
 import time
 import signal
 import sys
@@ -6,6 +6,9 @@ from colorama import Fore, Style, init
 
 # Inisialisasi Colorama
 init(autoreset=True)
+
+# Inisialisasi cloudscraper untuk bypass Cloudflare
+scraper = cloudscraper.create_scraper()
 
 # Fungsi untuk membaca kode otentikasi dari file
 def read_auth_token(file_path):
@@ -26,7 +29,7 @@ def get_user_info(auth_token):
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36 Edg/129.0.0.0'
     }
     
-    response = requests.get(url, headers=headers)
+    response = scraper.get(url, headers=headers)
     return response
 
 # Fungsi untuk mengeksekusi API quack
@@ -43,7 +46,7 @@ def execute_quack(auth_token):
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36 Edg/129.0.0.0'
     }
     
-    response = requests.get(url, headers=headers)
+    response = scraper.get(url, headers=headers)
     return response
 
 # Fungsi untuk menangani keluar aman
